@@ -98,7 +98,7 @@ Date:   Wed Sep 7 21:47:14 2016 -0500
 
 This shows that the signature is good, and checking the only contemporary member branch (isysd) shows the same good signature on the same commit. This is the genesis block of our chain.
 
-Who is this isysd fellow anyway, though? And what about the contents of this directory itself? The best place to start is by reading the charter. As it will tell you, members like isysd must be registered in the `members.csv` file.
+Who is this isysd fellow anyway, though? And what about the contents of this directory itself? The best place to start is by reading the [charter](https://github.com/isysd/gitguild_whitepaper_data/blob/isysd/charter.md). As it will tell you, members like isysd must be registered in the `members.csv` file.
 
 ```sh
 $ cat members.csv
