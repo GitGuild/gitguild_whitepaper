@@ -1,0 +1,3 @@
+[submodule ".gg"]
+	path = .gg
+	url = https://github.com/isysd/gitguild_whitepaper_data.git
