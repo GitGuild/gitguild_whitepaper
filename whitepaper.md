@@ -6,7 +6,7 @@ Git is a flexible version control system in use by tens of millions of collabora
 
 ### Creating a Git Guild
 
-A Git Guild is created by the members of a team, to serve as a contract for cooperation. The team's membership, stake, and voting are tracked and enacted in a data repository. (See Data Directory section)
+A Git Guild is created by the members of a team, to serve as a contract for cooperation. The team's membership, stake, and voting are tracked and enacted in a data repository. [example data dir](https://github.com/isysd/gitguild_whitepaper_data)
 
 To register a guild, the following rough steps are required.
 
