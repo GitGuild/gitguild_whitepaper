@@ -48,7 +48,7 @@ Git's hash tree is independently maintained by each member.
 
 1. Every commit must be signed by a signature of a member to be considered for merge.
 2. Each PR must meet the approval threshold vote by being merged into sufficient member branches.
-3. Currently a trusted git server is used as the source of truth. If any member can provide cryptographic proof of a conflict, the matter should be taken to arbitration.
+3. Currently a trusted git server is used as the source of truth. The master branch must always be kept in a signed and complete state. Member branches are the responsibility of each member.
 
 ### Economics and Finance
 
@@ -147,14 +147,80 @@ $ su isysd
 $ cd gitguild_whitepaper/.gg
 ```
 
-Lets sync our local git repo with the remote. This should discover a new branch from our applicant.
+Lets sync our local git repo with the remote. We should be able to discover a new branch from our applicant. Unfortunately, this discovery is not easily automated
 
 ```
 $ git fetch origin
-$ git branch -a
-  isysd
-* master
-  troll4u
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/master
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 1), reused 3 (delta 1), pack-reused 0
+Unpacking objects: 100% (3/3), done.
+From https://github.com/isysd/gitguild_whitepaper_data
+ * [new branch]      troll4u    -> origin/troll4u
+$ git checkout --track origin/troll4u
+Branch troll4u set up to track remote branch troll4u from origin by rebasing.
+Switched to a new branch 'troll4u'
 ```
+
+OK, now lets check out the application from this troll4u character. First, their member entry should have their name, key fingerprint, and the status active.
+
+```sh
+$ tail -n 1 members.csv 
+troll4u, 8F5E 2CD7 67CA D246 AD0C  AEDC 600E AD50 69F7 F1A6, active
+```
+
+Look good. Lets assume we can get and confirm their key from a keyserver lke pgp.mit.edu.
+
+```sh
+$ git log --show-signature -1
+commit 6ac332b120f1b7f93bb97370d0ee3707ac2a4445
+gpg: Signature made Thu 08 Sep 2016 12:34:17 AM EST using RSA key ID 69F7F1A6
+gpg: Good signature from "Troll 4 U (Troll gitguild account) <troll4u@gitguild.com>"
+Author: troll4u <troll4u@gitguild.com>
+Date:   Thu Sep 8 05:34:17 2016 +0000
+
+    registering myself with a guild
+```
+
+So it is a complete, properly signed application. We have a user, with their own member branch, and a signed commit with their member info. Since this is our example account, we'll have isysd go ahead and vote to approve the application by merging the commit.
+
+```sh
+$ git checkout isysd
+$ git merge --verify-signatures -S troll4u
+Commit 6ac332b has a good GPG signature by Troll 4 U (Troll gitguild account) <troll4u@gitguild.com>
+Updating aea8cef..6ac332b
+Fast-forward
+ members.csv | 1 +
+ 1 file changed, 1 insertion(+)
+$ git push origin isysd
+```
+
+Vote submitted.
+
+##### Vote Counting and Merging
+
+Now the origin repository is ready for vote counting. The first thing we need to know is how many votes are required? The ledger balance will tell us how many XP (voting tokens) have been issued, and to whom.
+
+```sh
+$ ledger -f ledger.dat bal
+                  $1  Assets:Treasury
+                 $-1  Grant:GitGuild:Infrastructure -$1
+                   0  XGG
+               1 XGG    Earned:isysd
+              -1 XGG    Issued
+                   0  XP
+                1 XP    Earned:isysd
+               -1 XP    Issued
+--------------------
+                   0
+```
+
+For the troll4u application, the isysd vote gives us a 100% yes. The PR must therefore be merged, by the rules of the charter.
+
+```
+$ git checkout master
+$ git merge --verify-signatures -S troll4u
+$ git push origin master
+```
+
+The vote is complete, and the resulting action has been commited to the chain. Our applicant troll4u is now a member. As a member, troll4u is entitled to the full benefits and responsibilities of membership described in the charter. Primarily, they are able to earn XP and XGG by making contributions. Until troll4u earns some XP, their votes will not count.
