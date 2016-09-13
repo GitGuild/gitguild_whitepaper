@@ -12,7 +12,7 @@ $ git config --global user.signingkey 69F7F1A6
 Congratulations, you're now a git power user. Clone the repository you'd like to collaborate on. I.e. this one.
 
 ```sh
-$ git clone --recursive https://github.com/isysd/gitguild_whitepaper.git
+$ git clone --recursive https://github.com/GitGuild/gitguild_whitepaper.git
 $ cd gitguild_whitepaper
 ```
 
@@ -37,12 +37,11 @@ This shows that the signature is good, and checking the only contemporary member
 Who is this isysd fellow anyway, though? And what about the contents of this directory itself? The best place to start is by reading the [charter](https://github.com/isysd/gitguild_whitepaper_data/blob/isysd/charter.md). As it will tell you, members like isysd must be registered in the `members.csv` file.
 
 ```sh
-$ cat members.csv
-Name, Keyfp, Status
-isysd, 9D85 DCE3 5BD7 3BE6 6233  C3E0 0E16 B546 5C35 86F6, active
+$ ls members
+isysd.md
 ```
 
-Would you like to register with our guild? Simply create a branch, add your username and gpg key to the keyring, gpg sign the changes as a commit, then submit as a PR. Lets take that step by step.
+Would you like to register with our guild? Simply create a branch, add your profile with gpg key to the directory above, gpg sign the changes as a commit, then submit as a PR. Lets take that step by step.
 
 Create a branch named after yourself. This example assumes your name is `troll4u`.
 
@@ -50,16 +49,29 @@ Create a branch named after yourself. This example assumes your name is `troll4u
 $ git checkout -b troll4u
 ```
 
-Add your username and gpg key to the keyring.
+Add your profile to the members directory. The simplest version of this is only slightly more than just your GPG key.
 
-```sh
-$ echo "troll4u, 8F5E 2CD7 67CA D246 AD0C  AEDC 600E AD50 69F7 F1A6, active" >> members.csv
+```
+# troll4u
+
+### GPG
+
+##### Public Key
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: SKS 1.1.5
+Comment: Hostname: pgp.mit.edu
+
+mQINBFfQrQsBEACxSZOk0ZaH9J7jHogmDfji3T4eoFPYlYBx3Cw/PbzflRUlHzNYxVuM/48K
+...
+=YCLJ
+-----END PGP PUBLIC KEY BLOCK-----
 ```
 
-Commit your branch to the git server.
+Great, that lets the other members of the guild know the basics, or at least enough to identify you. Add your profile, and commit your branch to the git server.
 
 ```sh
-$ git add members.csv
+$ git add members/troll4u.md
 $ git commit -S -m "registering myself with a guild"
 $ git push origin troll4u
 ```

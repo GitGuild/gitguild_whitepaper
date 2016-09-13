@@ -26,14 +26,34 @@ Branch troll4u set up to track remote branch troll4u from origin by rebasing.
 Switched to a new branch 'troll4u'
 ```
 
-OK, now lets check out the application from this troll4u character. First, their member entry should have their name, key fingerprint, and the status active.
+OK, now lets check out the application from this troll4u character. First, they should have a profile in the members directory.
 
 ```sh
-$ tail -n 1 members.csv 
-troll4u, 8F5E 2CD7 67CA D246 AD0C  AEDC 600E AD50 69F7 F1A6, active
+$ ls members
+isysd.md troll4u.md
 ```
 
-Look good. Lets assume we can get and confirm their key from a keyserver lke pgp.mit.edu.
+OK, and their GPG key should be inside.
+
+```
+$ cat members/troll4u.md
+# troll4u
+
+### GPG
+
+##### Public Key
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: SKS 1.1.5
+Comment: Hostname: pgp.mit.edu
+
+mQINBFfQrQsBEACxSZOk0ZaH9J7jHogmDfji3T4eoFPYlYBx3Cw/PbzflRUlHzNYxVuM/48K
+...
+=YCLJ
+-----END PGP PUBLIC KEY BLOCK-----
+```
+
+Look good. Lets assume we can get and confirm their key from a keyserver lke pgp.mit.edu. Lets check their commit itself.
 
 ```sh
 $ git log --show-signature -1
@@ -53,9 +73,21 @@ $ git checkout isysd
 $ git merge --verify-signatures -S troll4u
 Commit 6ac332b has a good GPG signature by Troll 4 U (Troll gitguild account) <troll4u@gitguild.com>
 Updating aea8cef..6ac332b
-Fast-forward
- members.csv | 1 +
- 1 file changed, 1 insertion(+)
+```
+
+Finally, we add our vote to the ledger by using our XP to create a voting ledger entry.
+
+```sh
+$ echo "2016/09/10 12:00:00 * Vote for troll4u
+    v:Member:troll4u:yes            1 XP
+    v:Member:troll4u:isysd          -1 XP" >> ledger.dat
+```
+
+The vote needs to be signed and pushed to complete the process.
+
+```sh
+$ git add ledger.dat
+$ git commit -S -m "vote for troll4u"
 $ git push origin isysd
 ```
 
