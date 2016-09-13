@@ -6,7 +6,7 @@ __Document version 0.1.0__
 
 ## Abstract
 
-Git is a flexible version control system in use by tens of millions of collaborators worldwide. Git [stores data](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects) in sha256 hash trees, and [supports](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) gpg signing of commits (since v1.7.9). With strict usage guidelines, these cryptographic utilities create a blockchain made up of gpg-signed, sha256-hashed commits.
+Git is a flexible version control system in use by tens of millions of collaborators worldwide. Git [stores data](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects) in sha1 hash trees, and [supports](https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work) gpg signing of commits (since v1.7.9). With strict usage guidelines, these cryptographic utilities create a blockchain made up of gpg-signed, sha1-hashed commits.
 
 ## Proof of Labor
 
